@@ -182,12 +182,12 @@ namespace Solar {
         }
     }
     // function to provide direction enum as block
-    //% blockId="solar_direnum" block="%dir"
+    //% blockId="solar_dirEnum" block="%dir"
     export function dirEnum(dir: directionId): directionId {
         return dir;
     }
     // function to provide servo enum as block
-    //% blockId="solar_servoenum" block="%servoId"
+    //% blockId="solar_servoEnum" block="%servoId"
     export function servoEnum(servo: servoId): servoId {
 
         return servo;
