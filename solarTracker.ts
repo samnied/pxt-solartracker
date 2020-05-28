@@ -66,13 +66,13 @@ namespace Solar {
         // "bl" : 2,
         // "br" : 3
         switch (id) {
-            case ldrId.TopLeft: str = "ldr0,?";
+            case ldrId.TopLeft: str = "tl,?";
                 break;
-            case ldrId.TopRight: str = "ldr1,?";
+            case ldrId.TopRight: str = "tr,?";
                 break;
-            case ldrId.BottomLeft: str = "ldr2,?";
+            case ldrId.BottomLeft: str = "bl,?";
                 break;
-            case ldrId.BottomRight: str = "ldr3,?";
+            case ldrId.BottomRight: str = "br,?";
                 break;
         }
         writeCom(str);
