@@ -51,6 +51,14 @@ namespace Solar {
         }
         return parseInt(str);
     }
+    export function read_str(): string {
+        let rBuf = pins.i2cReadBuffer(i2cAddr, 4, true);
+        let str = "";
+        for (let i = 0; i < 4; i++) {
+            str += String.fromCharCode(rBuf.getNumber(NumberFormat.Int8LE, i));
+        }
+        return str;
+    }
 
 
     /**
@@ -91,6 +99,19 @@ namespace Solar {
         }
         writeCom(str);
         return read();
+    }
+    //% blockId="solar_readServo_string" block=" Servo %servoId| value as string" 
+    export function readServo_str(id: servoId): string {
+        let str = "";
+
+        switch (id) {
+            case servoId.Pan: str = "servoP,?";
+                break;
+            case servoId.Tilt: str = "servoT,?";
+                break;
+        }
+        writeCom(str);
+        return read_str();
     }
 
     //% blockId="solar_readSolarCell" block="solar cell value" 
