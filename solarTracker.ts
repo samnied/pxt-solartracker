@@ -111,6 +111,7 @@ namespace Solar {
                 break;
         }
         writeCom(str);
+        control.waitMicros(50*1000);
         return read_str();
     }
 
