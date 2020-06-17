@@ -49,7 +49,8 @@ namespace SolarTracker {
         for (let i = 0; i < 4; i++) {
             str += String.fromCharCode(rBuf.getNumber(NumberFormat.Int8LE, i));
         }
-        return parseInt(str);
+        // solve the NaN problem
+        return parseInt(str)|| 0;
     }
 
     /**
@@ -134,8 +135,9 @@ namespace SolarTracker {
     }
 
     /**
-     * 
-     * 
+     * Reads the output of the soft controller
+     * returns the direction to turn
+     * in order to follow the (sun)light
      */
     //% blockId="solar_soft_controll" block="soft control %id" 
     //% group="Read" 
@@ -154,8 +156,7 @@ namespace SolarTracker {
         }
         writeCommand(str);
         control.waitMicros(wTime)
-        // nan problem
-        return read() || 0;
+        return read();
     }
 
     /**
