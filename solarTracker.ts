@@ -29,7 +29,7 @@ namespace SolarTracker {
     // I2C address of the device
     const i2cAddr = 8;
     // time to wait before read I2C, in micro seconds
-    const wTime = 1000;
+    const wTime = 5000;
 
     export function writeCommand(command: string): void {
         // creat comand buffer to store each char of the command string
@@ -77,7 +77,9 @@ namespace SolarTracker {
         }
         writeCommand(str);
         control.waitMicros(wTime)
-        return read();
+        let ret = read();
+        control.waitMicros(wTime)
+        return ret;
     }
 
     /**
@@ -94,7 +96,8 @@ namespace SolarTracker {
             case servoId.Pan: 
                 str = "servoP,?";
                 break;
-            case servoId.Tilt: str = "servoT,?";
+            case servoId.Tilt: 
+                str = "servoT,?";
                 break;
             default:
                 break;
@@ -128,6 +131,31 @@ namespace SolarTracker {
         writeCommand(str);
         control.waitMicros(wTime)
         return read();
+    }
+
+    /**
+     * 
+     * 
+     */
+    //% blockId="solar_soft_controll" block="soft control %id" 
+    //% group="Read" 
+    export function softControl(id: servoId): number {
+        let str = "";
+
+        switch (id) {
+            case servoId.Pan: 
+                str = "softP,?";
+                break;
+            case servoId.Tilt: 
+                str = "softT,?";
+                break;
+            default:
+                break;
+        }
+        writeCommand(str);
+        control.waitMicros(wTime)
+        // nan problem
+        return read() || 0;
     }
 
     /**
