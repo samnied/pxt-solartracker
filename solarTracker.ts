@@ -54,8 +54,7 @@ namespace SolarTracker {
     }
 
     /**
-     * Reads the sensor value
-     * returns the voltage in mV
+     * Returns the sensor voltage in mV
      * @param sensorId : Which sensor should be read.
      */
     //% blockId="solar_read_sensor" block=" Sensor %sensorId| value" 
@@ -84,8 +83,8 @@ namespace SolarTracker {
     }
 
     /**
-     * Reads the servo 
-     * returns the absolute postion in degrees
+     * Returns the absolute postion of the 
+     * servo [Pan/Tilt] in degrees
      * @param servoId : Which servo should be read.
      */
     //% blockId="solar_read_servo" block="Servo %servoId| value" 
@@ -109,8 +108,7 @@ namespace SolarTracker {
     }
     
     /**
-     * Reads the solarcell value
-     * returns the voltage in mV
+     * Returns the voltage of the solarcell in mV
      */
     //% blockId="solar_read_solar_cell" block="solar cell value" 
     //% group="Read" 
@@ -122,8 +120,7 @@ namespace SolarTracker {
     }
 
     /**
-     * Reads the actual operation mode
-     * returns the operation mode as enum
+     * Returns the current operation mode as enum [Manually/Automatic/Remote]
      */
     //% blockId="solar_mode" block="mode value" 
     //% group="Read" 
@@ -135,8 +132,7 @@ namespace SolarTracker {
     }
 
     /**
-     * Reads the output of the soft controller
-     * returns the direction to turn
+     * Returns the calculated direction to turn the Servo [Pan/Tilt]
      * in order to follow the (sun)light
      */
     //% blockId="solar_soft_controll" block="soft control %id" 
@@ -160,7 +156,7 @@ namespace SolarTracker {
     }
 
     /**
-     * Turns the servo to absolute position
+     * Turns the servo to the absolute position
      * @param servoId : Which servo should be turned.
      * @param degree : Position to be turned to.
      */
