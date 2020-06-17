@@ -24,8 +24,8 @@ enum modeId {
  * Functions to operate with the solar tracker.
  */
 
-//% weight=100 color=#0fbc11 icon=""
-namespace Solar {
+//% weight=100 color=#0fbc11 icon="\uf185" groups=["Read", "Write", "Constants"]
+namespace SolarTracker {
     // I2C address of the device
     const i2cAddr = 8;
     // time to wait before read I2C, in micro seconds
@@ -58,6 +58,7 @@ namespace Solar {
      * @param sensorId : Which sensor should be read.
      */
     //% blockId="solar_read_sensor" block=" Sensor %sensorId| value" 
+    //% group="Read" 
     export function readSensor(id: sensorId): number {
         let str = ""
         // "tl" : 0,
@@ -85,6 +86,7 @@ namespace Solar {
      * @param servoId : Which servo should be read.
      */
     //% blockId="solar_read_servo" block="Servo %servoId| value" 
+    //% group="Read" 
     export function readServo(id: servoId): number {
         let str = "";
 
@@ -107,6 +109,7 @@ namespace Solar {
      * returns the voltage in mV
      */
     //% blockId="solar_read_solar_cell" block="solar cell value" 
+    //% group="Read" 
     export function readSolarCell(): number {
         let str = "solarC,?";
         writeCommand(str);
@@ -119,6 +122,7 @@ namespace Solar {
      * returns the operation mode as enum
      */
     //% blockId="solar_mode" block="mode value" 
+    //% group="Read" 
     export function mode(): number {
         let str = "opMode,?";
         writeCommand(str);
@@ -133,6 +137,7 @@ namespace Solar {
      */
     //% blockId="solar_write_servo_position" block=" Set servo %id position %degree" 
     //% degree.min=0 degree.max=180 degree.defl=90
+    //% group="Write" 
     export function writeServoPosition(id: servoId, degree: number): void {
         let str = "";
 
@@ -152,6 +157,7 @@ namespace Solar {
      * @param modeId : Which mode should be set.
      */
     //% blockId="solar_set_mode" block="Set mode %id=solar_modeEnum|" 
+    //% group="Write" 
     export function setMode(id: modeId): void {
         let str = "opMode,";
 
@@ -177,6 +183,7 @@ namespace Solar {
      */
     //% blockId="solar_turn_direction" block="turn %dir=solar_dirEnum| %val"
     //% val.min=0 val.max=180 val.defl=1
+    //% group="Write" 
     export function turnDirection(direction: number, val: number): void {
         let turn = direction*1000 + val;
         let str = "turnDir,";
@@ -192,7 +199,8 @@ namespace Solar {
     // function to turn Pan or Tilt, value can be + or -
     //% blockId="solar_turnval" block="turn %servo=solar_servoEnum| %val"
     //% val.min=-180 val.max=180 val.defl=1
-    export function turnVal(servo: servoId, val: number): void {
+    //% group="Write" 
+    export function turnVal(servo: number, val: number): void {
         switch (servo) {
             case servoId.Pan:
                 if(val > 0)
@@ -219,16 +227,19 @@ namespace Solar {
 
     // provide direction enum as block
     //% blockId="solar_dirEnum" block="%dir"
+    //% group="Constants" 
     export function dirEnum(dir: directionId): directionId {
         return dir;
     }
     // provide servo enum as block
     //% blockId="solar_servoEnum" block="%servo"
+    //% group="Constants"
     export function servoEnum(servo: servoId): servoId {
         return servo;
     }
     // provide mode enum as block
     //% blockId="solar_modeEnum" block="%mode"
+    //% group="Constants"
     export function modeEnum(mode: modeId): modeId {
         return mode;
     }
