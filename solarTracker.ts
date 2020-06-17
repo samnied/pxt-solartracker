@@ -10,10 +10,10 @@ enum servoId {
     Tilt = 2
 }
 enum directionId {
-    left = 1,
-    right = 2,
-    up = 3,
-    down = 4
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3
 }
 enum modeId {
     Manually,
@@ -131,7 +131,7 @@ namespace Solar {
         return read();
     }
 
-    //% blockId="solar_readMode" block="mode" 
+    //% blockId="solar_readMode" block="mode value" 
     export function readMode(): number {
         let str = "opMode,?";
         writeCom(str);
@@ -154,7 +154,7 @@ namespace Solar {
         str += degree.toString();
         writeCom(str);
     }
-    //% blockId="solar_setMode" block="Set mode %id" 
+    //% blockId="solar_setMode" block="Set mode %id=modeEnum" 
     export function setMode(id: modeId): void {
         let str = "opMode,";
 
@@ -167,6 +167,42 @@ namespace Solar {
                 break;
         }
         writeCom(str);
+    }
+    // function to turn: up, down, left, right, direction is a parameter
+    //% blockId="solar_turndir" block=" turn %dir=solar_dirEnum| %val"
+    //% val.min=0 val.max=180 val.defl=180
+    export function turnDir(dir: number, val: number): void {
+        let turn = dir*1000 + val;
+        let str = "turnDir,";
+        str += turn.toString();
+        writeCom(str);
+    }
+    // function to turn Pan or Tilt, value can be + or -
+    //% blockId="solar_turnval" block="turn %servo=solar_servoEnum %val"
+    //% val.min=-180 val.max=180 val.defl=0
+    export function turnVal(servo: servoId, val: number): void {
+        switch (servo) {
+            case servoId.Pan:
+                if(val > 0)
+                {
+                    turnDir(Solar.dirEnum(directionId.Left), val)
+                }
+                else
+                {
+                    turnDir(Solar.dirEnum(directionId.Right), val)
+                }
+                break;
+            case servoId.Tilt:
+                if(val > 0)
+                {
+                    turnDir(Solar.dirEnum(directionId.Down), val)
+                }
+                else
+                {
+                    turnDir(Solar.dirEnum(directionId.Up), val)
+                }
+                break;
+        }
     }
     /*
     // function to turn: left, right, up, down direction is a parameter
@@ -236,5 +272,11 @@ namespace Solar {
     export function servoEnum(servo: servoId): servoId {
 
         return servo;
+    }
+    // function to provide mode enum as block
+    //% blockId="solar_modeEnum" block="%modeId"
+    export function modeEnum(mode: modeId): modeId {
+
+        return mode;
     }
 }
