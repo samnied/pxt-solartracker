@@ -54,9 +54,10 @@ namespace Solar {
 
     /**
      * Reads the sensor value
+     * returns the voltage in mV
      * @param sensorId : Which sensor should be read.
      */
-    //% blockId="solar_read_sensor" block=" LDR %sensorId| value" 
+    //% blockId="solar_read_sensor" block=" Sensor %sensorId| value" 
     export function readSensor(id: sensorId): number {
         let str = ""
         // "tl" : 0,
@@ -79,7 +80,8 @@ namespace Solar {
     }
 
     /**
-     * Reads the servo value
+     * Reads the servo 
+     * returns the absolute postion in degrees
      * @param servoId : Which servo should be read.
      */
     //% blockId="solar_read_servo" block="Servo %servoId| value" 
@@ -102,6 +104,7 @@ namespace Solar {
     
     /**
      * Reads the solarcell value
+     * returns the voltage in mV
      */
     //% blockId="solar_read_solar_cell" block="solar cell value" 
     export function readSolarCell(): number {
@@ -113,6 +116,7 @@ namespace Solar {
 
     /**
      * Reads the actual operation mode
+     * returns the operation mode as enum
      */
     //% blockId="solar_mode" block="mode value" 
     export function mode(): number {
@@ -147,7 +151,7 @@ namespace Solar {
      * Set operation mode
      * @param modeId : Which mode should be set.
      */
-    //% blockId="solar_set_mode" block="Set mode %id=modeEnum" 
+    //% blockId="solar_set_mode" block="Set mode %id=modeEnum|" 
     export function setMode(id: modeId): void {
         let str = "opMode,";
 
@@ -171,7 +175,7 @@ namespace Solar {
      * @param direction : Direction to turn.
      * @param val : Degrees to turn.
      */
-    //% blockId="solar_turn_direction" block=" turn %dir=solar_dirEnum| %val"
+    //% blockId="solar_turn_direction" block="turn %dir=solar_dirEnum| %val"
     //% val.min=0 val.max=180 val.defl=1
     export function turnDirection(direction: number, val: number): void {
         let turn = direction*1000 + val;
@@ -186,7 +190,7 @@ namespace Solar {
      * @param val : Degrees to turn relative.
      */
     // function to turn Pan or Tilt, value can be + or -
-    //% blockId="solar_turnval" block="turn %servo=solar_servoEnum %val"
+    //% blockId="solar_turnval" block="turn %servo=solar_servoEnum| %val"
     //% val.min=-180 val.max=180 val.defl=1
     export function turnVal(servo: servoId, val: number): void {
         switch (servo) {
