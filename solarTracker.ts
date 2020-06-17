@@ -151,7 +151,7 @@ namespace Solar {
      * Set operation mode
      * @param modeId : Which mode should be set.
      */
-    //% blockId="solar_set_mode" block="Set mode %id=modeEnum|" 
+    //% blockId="solar_set_mode" block="Set mode %id=solar_modeEnum|" 
     export function setMode(id: modeId): void {
         let str = "opMode,";
 
@@ -223,12 +223,12 @@ namespace Solar {
         return dir;
     }
     // provide servo enum as block
-    //% blockId="solar_servoEnum" block="%servoId"
+    //% blockId="solar_servoEnum" block="%servo"
     export function servoEnum(servo: servoId): servoId {
         return servo;
     }
     // provide mode enum as block
-    //% blockId="solar_modeEnum" block="%modeId"
+    //% blockId="solar_modeEnum" block="%mode"
     export function modeEnum(mode: modeId): modeId {
         return mode;
     }
