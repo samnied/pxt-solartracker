@@ -3,38 +3,35 @@ enum sensorId {
     TopRight,
     BottomLeft,
     BottomRight
-}
+    }
 enum servoId {
-    Pan = 1,
-    Tilt = 2
+    Pan,
+    Tilt
 }
 enum directionId {
-    Up = 0,
-    Down = 1,
-    Left = 2,
-    Right = 3
+    Up,
+    Down,
+    Left,
+    Right
 }
 enum modeId {
     Manually,
     Automatic,
     Remote
 }
-//Hardware limit of plattform
-enum servoLimit {
-    panUp = 180,
-    panLow = 0,
-    tiltUp = 180,
-    tiltLow = 0
-}
+
+/**
+ * Functions to operate with the solar tracker.
+ */
 
 //% weight=100 color=#0fbc11 icon=""
 namespace Solar {
-    // I2C address of solar device
+    // I2C address of the device
     const i2cAddr = 8;
-    // time to wait before read, in micros
+    // time to wait before read I2C, in micro seconds
     const wTime = 1000;
 
-    export function writeCom(command: string): void {
+    export function writeCommand(command: string): void {
         // creat comand buffer to store each char of the command string
         let comBuf = pins.createBuffer(16);
         // comand string 
@@ -45,6 +42,7 @@ namespace Solar {
         }
         pins.i2cWriteBuffer(i2cAddr, comBuf, false);
     }
+
     export function read(): number {
         let rBuf = pins.i2cReadBuffer(i2cAddr, 4, false);
         let str = "";
@@ -53,16 +51,12 @@ namespace Solar {
         }
         return parseInt(str);
     }
-    // for debugging purpose only
-    export function read_str(): string {
-        let rBuf = pins.i2cReadBuffer(i2cAddr, 4, false);
-        let str = "";
-        for (let i = 0; i < 4; i++) {
-            str += String.fromCharCode(rBuf.getNumber(NumberFormat.Int8LE, i));
-        }
-        return str;
-    }
-    //% blockId="solar_readSensor" block=" LDR %sensorId| value" 
+
+    /**
+     * Reads the sensor value
+     * @param sensorId : Which sensor should be read.
+     */
+    //% blockId="solar_read_sensor" block=" LDR %sensorId| value" 
     export function readSensor(id: sensorId): number {
         let str = ""
         // "tl" : 0,
@@ -79,11 +73,16 @@ namespace Solar {
             case sensorId.BottomRight: str = "br,?";
                 break;
         }
-        writeCom(str);
+        writeCommand(str);
         control.waitMicros(wTime)
         return read();
     }
-    //% blockId="solar_readServo" block="Servo %servoId| value" 
+
+    /**
+     * Reads the servo value
+     * @param servoId : Which servo should be read.
+     */
+    //% blockId="solar_read_servo" block="Servo %servoId| value" 
     export function readServo(id: servoId): number {
         let str = "";
 
@@ -96,41 +95,41 @@ namespace Solar {
             default:
                 break;
         }
-        writeCom(str);
+        writeCommand(str);
         control.waitMicros(wTime)
         return read();
     }
-    //% blockId="solar_readServo_string" block=" Servo %servoId| value as string" 
-    export function readServo_str(id: servoId): string {
-        let str = "";
-
-        switch (id) {
-            case servoId.Pan: str = "servoP,?";
-                break;
-            case servoId.Tilt: str = "servoT,?";
-                break;
-        }
-        writeCom(str);
-        control.waitMicros(wTime)
-        return read_str();
-    }
-    //% blockId="solar_readSolarCell" block="solar cell value" 
+    
+    /**
+     * Reads the solarcell value
+     */
+    //% blockId="solar_read_solar_cell" block="solar cell value" 
     export function readSolarCell(): number {
         let str = "solarC,?";
-        writeCom(str);
+        writeCommand(str);
         control.waitMicros(wTime)
         return read();
     }
-    //% blockId="solar_readMode" block="mode value" 
-    export function readMode(): number {
+
+    /**
+     * Reads the actual operation mode
+     */
+    //% blockId="solar_mode" block="mode value" 
+    export function mode(): number {
         let str = "opMode,?";
-        writeCom(str);
+        writeCommand(str);
         control.waitMicros(wTime)
         return read();
     }
-    //% blockId="solar_writeServo" block=" Write servo %id  %degree degrees" 
+
+    /**
+     * Turns the servo to absolute position
+     * @param servoId : Which servo should be turned.
+     * @param degree : Position to be turned to.
+     */
+    //% blockId="solar_write_servo_position" block=" Set servo %id position %degree" 
     //% degree.min=0 degree.max=180 degree.defl=90
-    export function writeServo(id: servoId, degree: number): void {
+    export function writeServoPosition(id: servoId, degree: number): void {
         let str = "";
 
         switch (id) {
@@ -141,9 +140,14 @@ namespace Solar {
         }
         // auto conversion from number to string
         str += degree.toString();
-        writeCom(str);
+        writeCommand(str);
     }
-    //% blockId="solar_setMode" block="Set mode %id=modeEnum" 
+
+    /**
+     * Set operation mode
+     * @param modeId : Which mode should be set.
+     */
+    //% blockId="solar_set_mode" block="Set mode %id=modeEnum" 
     export function setMode(id: modeId): void {
         let str = "opMode,";
 
@@ -155,55 +159,71 @@ namespace Solar {
             case modeId.Remote: str += 2;
                 break;
         }
-        writeCom(str);
+        writeCommand(str);
     }
-    // function to turn: up, down, left, right, direction is a parameter
-    //% blockId="solar_turndir" block=" turn %dir=solar_dirEnum| %val"
-    //% val.min=0 val.max=180 val.defl=180
-    export function turnDir(dir: number, val: number): void {
-        let turn = dir*1000 + val;
+
+    /**
+     * Turn the tracker 
+     * Up
+     * Down
+     * Left
+     * Right
+     * @param direction : Direction to turn.
+     * @param val : Degrees to turn.
+     */
+    //% blockId="solar_turn_direction" block=" turn %dir=solar_dirEnum| %val"
+    //% val.min=0 val.max=180 val.defl=1
+    export function turnDirection(direction: number, val: number): void {
+        let turn = direction*1000 + val;
         let str = "turnDir,";
         str += turn.toString();
-        writeCom(str);
+        writeCommand(str);
     }
+
+    /**
+     * Turn the tracker relative
+     * @param servoId : Which servo should be turned.
+     * @param val : Degrees to turn relative.
+     */
     // function to turn Pan or Tilt, value can be + or -
     //% blockId="solar_turnval" block="turn %servo=solar_servoEnum %val"
-    //% val.min=-180 val.max=180 val.defl=0
+    //% val.min=-180 val.max=180 val.defl=1
     export function turnVal(servo: servoId, val: number): void {
         switch (servo) {
             case servoId.Pan:
                 if(val > 0)
                 {
-                    turnDir(directionId.Left, val)
+                    turnDirection(directionId.Left, val)
                 }
                 else
                 {
-                    turnDir(directionId.Right, Math.abs(val))
+                    turnDirection(directionId.Right, Math.abs(val))
                 }
                 break;
             case servoId.Tilt:
                 if(val > 0)
                 {
-                    turnDir(directionId.Down, val)
+                    turnDirection(directionId.Down, val)
                 }
                 else
                 {
-                    turnDir(directionId.Up, Math.abs(val))
+                    turnDirection(directionId.Up, Math.abs(val))
                 }
                 break;
         }
     }
-    // function to provide direction enum as block
+
+    // provide direction enum as block
     //% blockId="solar_dirEnum" block="%dir"
     export function dirEnum(dir: directionId): directionId {
         return dir;
     }
-    // function to provide servo enum as block
+    // provide servo enum as block
     //% blockId="solar_servoEnum" block="%servoId"
     export function servoEnum(servo: servoId): servoId {
         return servo;
     }
-    // function to provide mode enum as block
+    // provide mode enum as block
     //% blockId="solar_modeEnum" block="%modeId"
     export function modeEnum(mode: modeId): modeId {
         return mode;
