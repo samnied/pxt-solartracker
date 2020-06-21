@@ -33,7 +33,8 @@ namespace SolarTracker {
 
     export function writeCommand(command: string): void {
         // creat comand buffer to store each char of the command string
-        let comBuf = pins.createBuffer(16);
+        //let comBuf = pins.createBuffer(16);
+        let comBuf = pins.createBuffer(64);
         // comand string 
         let comStr = command;
 
@@ -75,11 +76,10 @@ namespace SolarTracker {
             case sensorId.BottomRight: str = "br,?";
                 break;
         }
+        control.waitMicros(wTime)
         writeCommand(str);
         control.waitMicros(wTime)
-        let ret = read();
-        control.waitMicros(wTime)
-        return ret;
+        return read();
     }
 
     /**
@@ -102,6 +102,7 @@ namespace SolarTracker {
             default:
                 break;
         }
+        control.waitMicros(wTime)
         writeCommand(str);
         control.waitMicros(wTime)
         return read();
@@ -114,6 +115,7 @@ namespace SolarTracker {
     //% group="Read" 
     export function readSolarCell(): number {
         let str = "solarC,?";
+        control.waitMicros(wTime)
         writeCommand(str);
         control.waitMicros(wTime)
         return read();
@@ -126,6 +128,7 @@ namespace SolarTracker {
     //% group="Read" 
     export function mode(): number {
         let str = "opMode,?";
+        control.waitMicros(wTime)
         writeCommand(str);
         control.waitMicros(wTime)
         return read();
@@ -150,6 +153,7 @@ namespace SolarTracker {
             default:
                 break;
         }
+        control.waitMicros(wTime)
         writeCommand(str);
         control.waitMicros(wTime)
         return read();
@@ -174,7 +178,9 @@ namespace SolarTracker {
         }
         // auto conversion from number to string
         str += degree.toString();
+        control.waitMicros(wTime)
         writeCommand(str);
+        control.waitMicros(wTime)
     }
 
     /**
@@ -194,7 +200,9 @@ namespace SolarTracker {
             case modeId.Remote: str += 2;
                 break;
         }
+        control.waitMicros(wTime)
         writeCommand(str);
+        control.waitMicros(wTime)
     }
 
     /**
@@ -213,7 +221,9 @@ namespace SolarTracker {
         let turn = direction*1000 + val;
         let str = "turnDir,";
         str += turn.toString();
+        control.waitMicros(wTime)
         writeCommand(str);
+        control.waitMicros(wTime)
     }
 
     /**
@@ -250,6 +260,24 @@ namespace SolarTracker {
         }
     }
 
+    /**
+     * Write a name:value pair as a line to the display
+     */
+    //% blockId="solar_write_display" block="Display   %str and %val at line %line" 
+    //% line.min=0 line.max=4 line.defl=0
+    //% group="Write" 
+    export function writeDisplay(str: string, val: number, line:number): void {
+        let msg = "";
+        if((line >= 0) && (line <= 4))
+        {
+            //msg = "disp," + line.toString() + str + ":" + val.toString();
+            msg = "disp," + line.toString() + str + " " + val.toString();
+            control.waitMicros(wTime)
+            writeCommand(msg);
+            control.waitMicros(wTime)
+        }
+    }
+    
     // provide direction enum as block
     //% blockId="solar_dirEnum" block="%dir"
     //% group="Constants" 
