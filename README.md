@@ -1,5 +1,5 @@
 # Solar Tracker
-This library allows to operate the Solar Tracker with BBC Micro:bit and MakeCode
+This library allows to operate the Solar Tracker with BBC Micro:bit and MakeCode.
 
 # Reference
 ## turnVal
