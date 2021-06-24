@@ -1,5 +1,5 @@
 {
-    "name": "pxt-solartracker",
+    "name": "solartracker",
     "version": "1.1.0",
     "description": "",
     "dependencies": {
@@ -8,8 +8,8 @@
     "files": [
         "README.md",
         "solarTracker.ts",
-        "_locales/de/pxt-solartracker-strings.json",
-        "_locales/de/pxt-solartracker-jsdoc-strings.json"
+        "_locales/de/solartracker-strings.json",
+        "_locales/de/solartracker-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"
