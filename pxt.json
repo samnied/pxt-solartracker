@@ -4,11 +4,14 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "radio": "*"
+        "radio": "*",
+        "microphone": "*"
     },
     "files": [
         "README.md",
-        "solarTracker.ts"
+        "solarTracker.ts",
+        "_locales/de/pxt-solartracker-strings.json",
+        "_locales/de/pxt-solartracker-jsdoc-strings.json"
     ],
     "testFiles": [
         "test.ts"
