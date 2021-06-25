@@ -1,5 +1,5 @@
 {
-  "SolarTracker": "Functions to operate with the solar tracker.",
+  "SolarTracker": "Funktionen um den SolarTracker zu Steuern die Sensoren zu lesen.",
   "SolarTracker.mode": "Returns the current operation mode as enum [Manually/Automatic/Remote]",
   "SolarTracker.readSensor": "Returns the sensor voltage in mV",
   "SolarTracker.readServo": "Returns the absolute postion of the \r\nservo [Pan/Tilt] in degrees",
