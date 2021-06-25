@@ -1,0 +1,17 @@
+{
+  "SolarTracker": "Functions to operate with the solar tracker.",
+  "SolarTracker.mode": "Returns the current operation mode as enum [Manually/Automatic/Remote]",
+  "SolarTracker.readSensor": "Returns the sensor voltage in mV",
+  "SolarTracker.readServo": "Returns the absolute postion of the \r\nservo [Pan/Tilt] in degrees",
+  "SolarTracker.readSolarCell": "Returns the voltage of the solarcell in mV",
+  "SolarTracker.setMode": "Set operation mode",
+  "SolarTracker.softControl": "Returns the calculated direction to turn the Servo [Pan/Tilt]\r\nin order to follow the (sun)light",
+  "SolarTracker.turnDirection": "Turn the tracker \r\nUp\r\nDown\r\nLeft\r\nRight",
+  "SolarTracker.turnDirection|param|direction": ": Direction to turn.",
+  "SolarTracker.turnDirection|param|val": ": Degrees to turn.",
+  "SolarTracker.turnVal": "Turn the tracker relative",
+  "SolarTracker.turnVal|param|val": ": Degrees to turn relative.",
+  "SolarTracker.writeDisplay": "Write a name:value pair as a line to the display",
+  "SolarTracker.writeServoPosition": "Turns the servo to the absolute position",
+  "SolarTracker.writeServoPosition|param|degree": ": Position to be turned to."
+}

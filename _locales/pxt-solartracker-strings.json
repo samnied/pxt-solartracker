@@ -1,0 +1,20 @@
+{
+  "SolarTracker.dirEnum|block": "%dir",
+  "SolarTracker.modeEnum|block": "%mode",
+  "SolarTracker.mode|block": "Modus Wert",
+  "SolarTracker.readSensor|block": " Sensor %sensorId| value",
+  "SolarTracker.readServo|block": "Servo %servoId| value",
+  "SolarTracker.readSolarCell|block": "Solarzelle Wert",
+  "SolarTracker.servoEnum|block": "%servo",
+  "SolarTracker.setMode|block": "Set mode %id=solar_modeEnum|",
+  "SolarTracker.softControl|block": "soft control %id",
+  "SolarTracker.turnDirection|block": "turn %dir=solar_dirEnum| %val",
+  "SolarTracker.turnVal|block": "turn %servo=solar_servoEnum| %val",
+  "SolarTracker.writeDisplay|block": "Display   %str and %val at line %line",
+  "SolarTracker.writeServoPosition|block": " Set servo %id position %degree",
+  "SolarTracker|block": "SolarTracker",
+  "{id:category}SolarTracker": "SolarTracker",
+  "{id:group}Constants": "Constants",
+  "{id:group}Read": "Read",
+  "{id:group}Write": "Write"
+}
