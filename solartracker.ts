@@ -1,22 +1,44 @@
 enum sensorId {
+    //% block="TopLeft"
     TopLeft,
+
+    //% block="TopRight"
     TopRight,
+
+    //% block="BottomLeft"
     BottomLeft,
+
+    //% block="BottomRight"
     BottomRight
     }
 enum servoId {
+    //% block="Pan"
     Pan,
+
+    //% block="Tilt"
     Tilt
 }
 enum directionId {
+    //% block="Up"
     Up,
+
+    //% block="Down"
     Down,
+
+    //% block="Left"
     Left,
+
+    //% block="Right"
     Right
 }
 enum modeId {
+    //% block="Manually"
     Manually,
+
+    //% block="Automatic"
     Automatic,
+
+    //% block="Remote"
     Remote
 }
 
